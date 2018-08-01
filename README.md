@@ -27,9 +27,9 @@ Make sure Docker and Node.js are installed
 
 The DApp and eosio will occupy the ports 3000, 8888 and 9876. Make sure nothing else is already running on these ports.
 
-Download the repository:
+Clone the repository:
 ```sh
-curl -sL https://github.com/EOSIO/eosio-project-boilerplate-simple/archive/master.tar.gz | tar xz
+git clone https://github.com/EOSIO/eosio-project-boilerplate-simple.git
 ```
 
 The following guide assumes you are using macOS.
