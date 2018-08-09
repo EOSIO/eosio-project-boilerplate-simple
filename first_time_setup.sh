@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o errexit
 
 echo "=== start of first time setup ==="
 
@@ -25,7 +26,7 @@ docker pull eosio/eos-dev:v1.1.0
 # force remove the perivous container if any
 # create a clean data folder in eosio_docker to preserve block data
 echo "=== setup/reset data for eosio_docker ==="
-docker rm --force eosio_notechain_container
+docker stop eosio_notechain_container || true && docker rm --force eosio_notechain_container || true
 rm -rf "./eosio_docker/data"
 mkdir -p "./eosio_docker/data"
 
