@@ -12,7 +12,7 @@ NoteChain demonstrates the eosio platform running a blockchain as a local single
 
 Github eosio-project-boilerplate-simple (https://github.com/EOSIO/eosio-project-boilerplate-simple) contains the UI and Smart Contract code, as well as setup scripts which will initialise and start all the necessary components.
 
-The sample DApp demonstrates storing data in multi index table and retreiving this data into the web based UI. NoteChain is a simple note taking application, where notes are tied to user accounts. For this example, all accounts are pre-created by scripts and the account details are displayed at the bottom of the NoteChain UI.
+The sample DApp demonstrates storing data in multi index table and retrieving this data into the web based UI. NoteChain is a simple note taking application, where notes are tied to user accounts. For this example, all accounts are pre-created by scripts and the account details are displayed at the bottom of the NoteChain UI.
 
 Each account can then be used to add a note to the blockchain. The individual notes are saved in a multi-index table and for simplicity are of fixed width. Each account may have one note attached to it, adding a note to an account with an existing note will replace the existing note with a new note.
 
@@ -36,7 +36,7 @@ The following guide assumes you are using macOS.
 
 # Quick start - Run the DApp
 
-In this section we provide a single command script to run all the commands needed to start for both blockchain and UI. For more detail on each component see the `Detailed guide` below.
+In this section we provide a single command script to run all the commands needed to start both the blockchain and UI. For more detail on each component see the `Detailed guide` below.
 
 **To start**
 ```sh
@@ -120,7 +120,7 @@ In the first (blockchain) terminal window, execute this command:
 ./start_eosio_docker.sh
 ```
 
-The blockchain will be resumed automatically. And the log will be output to the terminal.
+The blockchain will be resumed automatically and the log will be outputted to the terminal.
 
 **restarting the DApp**
 
@@ -131,7 +131,7 @@ In the second (frontend) terminal window, you can restart the frontend react app
 
 ## Reset blockchain data
 
-First, you need to stop the blockchain (as above). And then execute:
+First, you need to stop the blockchain (as above) and then execute:
 ```sh
 ./first_time_setup.sh
 ```
@@ -167,7 +167,7 @@ noteChain // project directory
     ├── package-lock.json // generated after npm install
     └── package.json // for npm packages
 
-* means the directory will be mount to the docker container. whenever the file changes on local machine, it will be automatically reflected in the docker environment.
+* means the directory will be mounted to the docker container. Whenever the file changes on the local machine, it will be automatically reflected in the docker environment.
 ```
 
 ## DApp development
@@ -217,7 +217,7 @@ The following script will help you to unlock the wallet, compile the modified co
 
 After running this script the modified smart contract will be deployed on the blockchain.
 
-Remember to redeploy the NoteChain contract each time you modify it using!
+Remember to redeploy the NoteChain contract each time you modify it using the steps above!
 
 ## Frontend:
 
@@ -225,7 +225,7 @@ The UI code can be found  at noteChain/frontend/src/pages/index.jsx), once you h
 
 ## Docker commands
 
-If you are more familiar with docker, you could use below docker command to have better control with the whole environment. Below is the explanation of each of the command
+If you are more familiar with docker, you could use the docker commands below to have better control with the whole environment. Below are the explanations of each of the commands:
 
 **Execute below command in `/eosio_docker`:**
 

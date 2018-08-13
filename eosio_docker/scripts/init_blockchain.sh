@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o errexit
 
 echo "=== setup blockchain accounts and smart contract ==="
 

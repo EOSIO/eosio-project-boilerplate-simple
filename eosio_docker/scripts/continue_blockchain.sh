@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o errexit
 
 # this file is used to continue the stopped blockchain
 

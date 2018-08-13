@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o errexit
 
 # change to script's directory
 cd "$(dirname "$0")/eosio_docker"
