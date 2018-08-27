@@ -5,8 +5,8 @@ set -o errexit
 
 echo "=== start blockchain with  ==="
 
-# change to executable directory
-cd "/opt/eosio/bin"
+# set PATH
+PATH="$PATH:/opt/eosio/bin"
 
 set -m
 

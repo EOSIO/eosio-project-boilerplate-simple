@@ -3,11 +3,10 @@ set -o errexit
 
 echo "=== start deploy data ==="
 
-cleos() {
-  /opt/eosio/bin/cleos "$@"
-}
+# set PATH
+PATH="$PATH:/opt/eosio/bin"
 
-# cd into script's folder
+# change to script directory
 cd "$(dirname "$0")"
 
 echo "=== start create accounts in blockchain ==="
