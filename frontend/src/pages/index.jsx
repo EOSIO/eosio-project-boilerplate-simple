@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Api, Rpc, SignatureProvider } from 'eosjs2'; // https://github.com/EOSIO/eosjs2
+import Eos from 'eosjs'; // https://github.com/EOSIO/eosjs
 
 // material-ui dependencies
 import { withStyles } from '@material-ui/core/styles';
@@ -11,9 +11,6 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
-// eosio endpoint
-const endpoint = "http://localhost:8888";
 
 // NEVER store private keys in any source code in your real life development
 // This is for demo purposes only!
@@ -88,40 +85,28 @@ class Index extends Component {
     }
 
     // eosjs function call: connect to the blockchain
-    const rpc = new Rpc.JsonRpc(endpoint);
-    const signatureProvider = new SignatureProvider([privateKey]);
-    const api = new Api({ rpc, signatureProvider });
-    try {
-      const result = await api.transact({
-        actions: [{
-          account: "notechainacc",
-          name: actionName,
-          authorization: [{
-            actor: account,
-            permission: 'active',
-          }],
-          data: actionData,
-        }]
-      }, {
-        blocksBehind: 3,
-        expireSeconds: 30,
-      });
+    const eos = Eos({keyProvider: privateKey});
+    const result = await eos.transaction({
+      actions: [{
+        account: "notechainacc",
+        name: actionName,
+        authorization: [{
+          actor: account,
+          permission: 'active',
+        }],
+        data: actionData,
+      }],
+    });
 
-      console.log(result);
-      this.getTable();
-    } catch (e) {
-      console.log('Caught exception: ' + e);
-      if (e instanceof Rpc.RpcError) {
-        console.log(JSON.stringify(e.json, null, 2));
-      }
-    }
+    console.log(result);
+    this.getTable();
   }
 
   // gets table data from the blockchain
   // and saves it into the component state: "noteTable"
   getTable() {
-    const rpc = new Rpc.JsonRpc(endpoint);
-    rpc.get_table_rows({
+    const eos = Eos();
+    eos.getTableRows({
       "json": true,
       "code": "notechainacc",   // contract who owns the table
       "scope": "notechainacc",  // scope of the table
