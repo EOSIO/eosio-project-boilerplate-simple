@@ -8,3 +8,6 @@
 
 # start frontend react app
 ./start_frontend.sh
+
+# start email server
+./start_email_server.sh

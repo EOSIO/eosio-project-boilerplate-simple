@@ -35,3 +35,5 @@ echo "=== npm install packpage for frontend react app ==="
 # change directory to ./frontend
 cd "./frontend"
 npm install
+
+pip install -r email_server/requirements.txt

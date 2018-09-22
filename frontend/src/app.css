@@ -1,0 +1,27 @@
+#root {
+  height: 100%;
+}
+.main-container {
+  height: 100%;
+}
+.main-container .grid {
+  height: 100%;
+}
+
+button.ui.green.button.big.right {
+  float: right;
+}
+
+button.ui.green.button.big {
+  padding: 1rem 8rem;
+}
+
+.confirmation-modal h3 {
+  text-align: center;
+  color: green !important;
+}
+
+div#message-notification {
+  width: 30%;
+  transform: translateX(50%);
+}
