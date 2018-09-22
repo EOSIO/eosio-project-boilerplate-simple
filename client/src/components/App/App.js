@@ -18,8 +18,8 @@ import Chat from '../Chat/Chat';
 // ];
 
 
-const sender = {"name":"useraaaaaaaa", "privateKey":"5K7mtrinTFrVTduSxizUc5hjXJEtTjVTsqSHeBHes1Viep86FP5", "publicKey":"EOS6kYgMTCh1iqpq9XGNQbEi8Q6k5GujefN9DSs55dcjVyFAq7B6b"}
-const recipient = {"name":"useraaaaaaab", "privateKey":"5KLqT1UFxVnKRWkjvhFur4sECrPhciuUqsYRihc1p9rxhXQMZBg", "publicKey":"EOS78RuuHNgtmDv9jwAzhxZ9LmC6F295snyQ9eUDQ5YtVHJ1udE6p"}
+const account1 = {"name":"useraaaaaaaa", "privateKey":"5K7mtrinTFrVTduSxizUc5hjXJEtTjVTsqSHeBHes1Viep86FP5", "publicKey":"EOS6kYgMTCh1iqpq9XGNQbEi8Q6k5GujefN9DSs55dcjVyFAq7B6b"}
+const account2 = {"name":"useraaaaaaab", "privateKey":"5KLqT1UFxVnKRWkjvhFur4sECrPhciuUqsYRihc1p9rxhXQMZBg", "publicKey":"EOS78RuuHNgtmDv9jwAzhxZ9LmC6F295snyQ9eUDQ5YtVHJ1udE6p"}
 
 
 
@@ -27,12 +27,41 @@ const recipient = {"name":"useraaaaaaab", "privateKey":"5KLqT1UFxVnKRWkjvhFur4sE
 class App extends Component {
 
   state = {
-    sender: { privateKey : sender.privateKey, account : sender.name},
-    recipient : { publicKey : recipient.publicKey },
+    sender: {},
+    recipient : {},
     funnelStatus : '', //HandshakePending HandshakeEstablished
     messages: {},
     page: 'login'
   };
+
+  componentDidMount () {
+    const { account } = this.props.match.params
+    switch (account) {
+      case 'account1':
+        this.setState({ 
+          sender: { privateKey : account1.privateKey, account : account1.name},
+          recipient : { publicKey : account2.publicKey },
+        });
+        console.log('Sender set to account1');
+        console.log('Recipient set to account2');
+        break;
+      case 'account2':
+      this.setState({ 
+        sender: { privateKey : account2.privateKey, account : account2.name},
+        recipient : { publicKey : account1.publicKey },
+      });
+      console.log('Sender set to account2');
+      console.log('Recipient set to account1');
+        break;
+      default:
+      this.setState({ 
+        sender: { privateKey : account1.privateKey, account : account1.name},
+        recipient : { publicKey : account2.publicKey },
+      });
+      console.log('Sender set to account1');
+      console.log('Recipient set to account2');
+    }
+  }
 
   constructor(props) {
     super(props)
@@ -68,7 +97,7 @@ class App extends Component {
           <Login setLogin={this.setLogin} sender={this.state.sender} />
         }
         {this.state.page === "requestChat" && 
-          <RequestChat setChatRequest={this.setChatRequest} proposedRecipient={recipient} />
+          <RequestChat setChatRequest={this.setChatRequest} proposedRecipient={this.state.recipient} />
         }
         {this.state.page === "chat" && 
           <Chat 

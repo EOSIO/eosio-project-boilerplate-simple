@@ -10,7 +10,7 @@ const Router = () => (
     <div className="container-fluid">
         <Header />
         <Switch>
-            <Route path="/" component={App} />
+            <Route path="/:account" component={App} />
             <Route component={NotFound} />
         </Switch>
         <Footer />
