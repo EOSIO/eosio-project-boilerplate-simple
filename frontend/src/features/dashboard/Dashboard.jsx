@@ -72,7 +72,8 @@ class Dashboard extends React.Component {
     console.log("Ready to submit");
     this.props.update(account, privateKey, {
       _user: account,
-      _note: note
+      _email: "jai@seedinvest.com",
+      _website: "seedinvest.com"
     });
   };
   render() {

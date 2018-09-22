@@ -20,17 +20,18 @@ class notechain : public eosio::contract {
     bool isnewuser( account_name user ) {
       notetable noteobj(_self, _self);
       // get object by secordary key
-      auto notes = noteobj.get_index<N(getbyuser)>();
-      auto note = notes.find(user);
+      auto emails = noteobj.get_index<N(getbyuser)>();
+      auto email = emails.find(user);
 
-      return note == notes.end();
+      return email == emails.end();
     }
 
     /// @abi table
     struct notestruct {
       uint64_t      prim_key;  // primary key
       account_name  user;      // account name for the user
-      std::string   note;      // the note message
+      std::string   email;      // the email
+      std::string   website;      // the website
       uint64_t      timestamp; // the store the last update block time
 
       // primary key
@@ -48,7 +49,7 @@ class notechain : public eosio::contract {
     using contract::contract;
 
     /// @abi action
-    void update( account_name _user, std::string& _note ) {
+    void update( account_name _user, std::string& _email, std::string& _website) {
       // to sign the action with the given account
       require_auth( _user );
 
@@ -60,16 +61,17 @@ class notechain : public eosio::contract {
         obj.emplace( _self, [&]( auto& address ) {
           address.prim_key    = obj.available_primary_key();
           address.user        = _user;
-          address.note        = _note;
+          address.email        = _email;
+          address.website        = _website;
           address.timestamp   = now();
         });
       } else {
         // get object by secordary key
-        auto notes = obj.get_index<N(getbyuser)>();
-        auto &note = notes.get(_user);
+        auto emails = obj.get_index<N(getbyuser)>();
+        auto &email = emails.get(_user);
         // update object
-        obj.modify( note, _self, [&]( auto& address ) {
-          address.note        = _note;
+        obj.modify( email, _self, [&]( auto& address ) {
+          address.email        = _email;
           address.timestamp   = now();
         });
       }

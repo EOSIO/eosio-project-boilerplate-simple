@@ -56,6 +56,7 @@ echo "=== deploy smart contract ==="
 # $3 wallet for unlock the account
 # $4 password for unlocking the wallet
 deploy_contract.sh notechain notechainacc notechainwal $(cat notechain_wallet_password.txt)
+# deploy_contract.sh email_service notechainacc notechainwal $(cat notechain_wallet_password_email.txt)
 
 echo "=== create user accounts ==="
 # script for create data into blockchain
