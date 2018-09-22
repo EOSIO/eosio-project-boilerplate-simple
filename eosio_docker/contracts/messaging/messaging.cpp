@@ -21,97 +21,72 @@ class messaging : public eosio::contract {
     }
 
     //@abi action
-    void newphonebook( account_name from, uint64_t book_id, string personal_seed) {
-      
-      //require_auth( from ); // make sure authorized by account
+    void registerkey(uint64_t id, account_name who, string pbk) {
 
-      phonebook_indexed books( from, _self ); // code, scope
+    //  require_auth( who ); // make sure authorized by account
 
-      auto itr = books.find( book_id );
+      keys_indexed keys( who, _self ); // code, scope
 
-      if( itr != books.end() ) {
-         std::string err = "There is already a phonebook with this id: " + std::to_string(book_id);
+      auto itr = keys.find( id );
+
+      if( itr != keys.end() ) {
+         std::string err = "Key id is already in use: " + std::to_string(id);
          eosio_assert( false, err.c_str() );
       }
 
-      books.emplace( from /*payer*/, [&]( auto& book ) {
-         book.id = book_id;
-         book.name = from;
-         book.seed = personal_seed;
+      keys.emplace( who, [&]( auto& item ) {
+         item.id = id;
+         item.who = who;
+         item.pbk = pbk;
       });
 
     }
 
     //@abi action
-    void updatephonebook(account_name from, uint64_t book_id, string new_seed) {
+    void newrequest(uint64_t id, account_name sender, account_name recipient) {
 
-     // require_auth( from ); // make sure authorized by account
+       //  require_auth( sender ); // make sure authorized by account
 
-      phonebook_indexed books( from, _self ); // code, scope
+      requests_indexed requests( sender, recipient ); // code, scope
 
-      auto itr = books.find( book_id );
+      auto itr = requests.find( id );
 
-      if( itr != books.end() && itr -> name == from) {
-
-        books.modify( itr, from, [&]( auto& book ) {
-
-          book.seed = new_seed;
-
-        });
-
-      } else {
-
-         std::string err = "Could not access this phone book: " + std::to_string(book_id);
+      if( itr != requests.end() ) {
+         std::string err = "Request id is already in use: " + std::to_string(id);
          eosio_assert( false, err.c_str() );
-
       }
 
+      requests.emplace( sender, [&]( auto& item ) {
+         item.id = id;
+         item.recipient = recipient;
+         item.time_requested = now();
+         item.sender = sender;
+      });
+
     }
 
     //@abi action
-    void addrequest(account_name from, account_name to, string ipfs_hash) {
+    void registerseed(uint64_t id, account_name sender, account_name recipient, string seed) {
 
-      // require_auth( from ); // make sure authorized by account
+      require_auth( sender ); // make sure authorized by account
 
-      requests_indexed requests( from, _self ); // code, scope
+      phonebook_indexed books( sender, _self ); // code, scope
 
-      auto itr = requests.get_index<N(byRecipient)>();
+      auto itr = books.find( id );
 
-      uint64_t found = 0;
-
-      for( const auto& item : itr ) {
-        
-        if (item.for_who == to) {
-
-          found = 1;
-
-          itr.modify( item, from, [&]( auto& request ) {
-
-            request.from.push_back(from);
-            request.ipfshash.push_back(ipfs_hash);
-
-          });
-
-        }
-
+      if( itr != books.end() ) {
+         std::string err = "Book id is already in use: " + std::to_string(id);
+         eosio_assert( false, err.c_str() );
       }
 
-      //if(found == 0) {}
+      books.emplace( sender, [&]( auto& item ) {
+         item.id = id;
+         item.sender = sender;
+         item.recipient = recipient;
+         item.seed = seed;
+      });
 
-    }
-
-    //@abi action
-    void registerkey(account_name who, string pbk) {}
-
-    //@abi action
-    void newrequest(account_name sender, account_name recipient) {
-
-
-
-    }
-
-    //@abi action
-    void registerseed(account_name sender, account_name recipient, string seed) {}
+    } 
 
    private:
 
@@ -125,10 +100,13 @@ class messaging : public eosio::contract {
 
       uint64_t primary_key() const { return id; }
 
-      account_name by_receiver() const { return for_who; } //getter for receiver of requests
+      account_name by_recipient() const { return recipient; } //getter for recipient
 
-    
-      EOSLIB_SERIALIZE(requests, ( id )( for_who )( from )( ipfshash )( last_time_checked ));
+      uint64_t by_time_requested() const { return time_requested; }
+
+      account_name by_sender() const { return sender; }
+
+      EOSLIB_SERIALIZE(requests, ( id )( recipient )( time_requested )( sender ));
 
    };
 
@@ -143,13 +121,17 @@ class messaging : public eosio::contract {
 
       uint64_t primary_key() const { return id; }
 
-      
+      account_name by_sender() const { return sender; }
 
-      EOSLIB_SERIALIZE(phonebook, );
+      account_name by_recipient() const { return recipient; }
+
+      string by_seed() const { return seed; }
+
+      EOSLIB_SERIALIZE(phonebook, ( id )( sender )( recipient )( seed ));
 
    };
 
-    //@abi table keys i64
+   //@abi table keys i64
    struct keys {
 
       uint64_t id;
@@ -158,20 +140,31 @@ class messaging : public eosio::contract {
 
       uint64_t primary_key() const { return id; }
 
-      
+      account_name by_who() const { return who; }
 
-      EOSLIB_SERIALIZE(phonebook, );
+      string by_public_key() const { return pbk; }
+
+      EOSLIB_SERIALIZE(keys, ( id )( who )( pbk ));
 
    };
 
+   typedef eosio::multi_index<N( requests ), requests,
+         indexed_by<N( byRecipient ), const_mem_fun<requests, account_name, &requests::by_recipient> >,
+         indexed_by<N( byTimeRequested ), const_mem_fun<requests, uint64_t, &requests::by_time_requested> >,
+         indexed_by<N( bySender ), const_mem_fun<requests, account_name, &requests::by_sender> >
+   > requests_indexed;
+
    typedef eosio::multi_index<N( phonebook ), phonebook,
-         
+         indexed_by<N( bySender ), const_mem_fun<phonebook, account_name, &phonebook::by_sender> >,
+         indexed_by<N( byRecipient ), const_mem_fun<phonebook, account_name, &phonebook::by_recipient> >,
+         indexed_by<N( bySeed ), const_mem_fun<phonebook, string, &phonebook::by_seed> >
    > phonebook_indexed;
 
-   typedef eosio::multi_index<N( requests ), requests,
-         
-   > requests_indexed;
+   typedef eosio::multi_index<N( keys ), keys,
+         indexed_by<N( byWho ), const_mem_fun<keys, account_name, &keys::by_who> >,
+         indexed_by<N( byPublicKey ), const_mem_fun<keys, string, &keys::by_public_key> >
+   > keys_indexed;
   
 };
 
-EOSIO_ABI( evs, ( updatephonebook )( newphonebook )( addrequest ))
+EOSIO_ABI( messaging, ( registerkey )( newrequest )( registerseed ))
