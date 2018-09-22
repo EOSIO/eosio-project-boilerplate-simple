@@ -21,9 +21,9 @@ class messaging : public eosio::contract {
     }
 
     //@abi action
-    void registerkey(uint64_t id, account_name who, string pbk) {
+    void registerkey(uint64_t id, account_name who, string publickey) {
 
-    //  require_auth( who ); // make sure authorized by account
+      require_auth( who ); // make sure authorized by account
 
       keys_indexed keys( who, _self ); // code, scope
 
@@ -34,12 +34,12 @@ class messaging : public eosio::contract {
          eosio_assert( false, err.c_str() );
       }
 
-      keys.emplace( who, [&]( auto& item ) {
-         item.id = id;
-         item.who = who;
-         item.pbk = pbk;
-      });
-
+       keys.emplace( who, [&]( auto& item ) {
+          item.id = id;
+          item.who = who;
+          item.publickey = publickey;
+       });
+     
     }
 
     //@abi action
@@ -117,7 +117,6 @@ class messaging : public eosio::contract {
       account_name sender;
       account_name recipient;
       string seed;
- //     checksum256 seed;
 
       uint64_t primary_key() const { return id; }
 
@@ -136,15 +135,15 @@ class messaging : public eosio::contract {
 
       uint64_t id;
       account_name who;
-      string pbk;
+      string publickey;
 
       uint64_t primary_key() const { return id; }
 
       account_name by_who() const { return who; }
 
-      string by_public_key() const { return pbk; }
+      string by_public_key() const { return publickey; }
 
-      EOSLIB_SERIALIZE(keys, ( id )( who )( pbk ));
+      EOSLIB_SERIALIZE(keys, ( id )( who )( publickey ));
 
    };
 
@@ -156,13 +155,11 @@ class messaging : public eosio::contract {
 
    typedef eosio::multi_index<N( phonebook ), phonebook,
          indexed_by<N( bySender ), const_mem_fun<phonebook, account_name, &phonebook::by_sender> >,
-         indexed_by<N( byRecipient ), const_mem_fun<phonebook, account_name, &phonebook::by_recipient> >,
-         indexed_by<N( bySeed ), const_mem_fun<phonebook, string, &phonebook::by_seed> >
+         indexed_by<N( byRecipient ), const_mem_fun<phonebook, account_name, &phonebook::by_recipient> >
    > phonebook_indexed;
 
    typedef eosio::multi_index<N( keys ), keys,
-         indexed_by<N( byWho ), const_mem_fun<keys, account_name, &keys::by_who> >,
-         indexed_by<N( byPublicKey ), const_mem_fun<keys, string, &keys::by_public_key> >
+         indexed_by<N( byWho ), const_mem_fun<keys, account_name, &keys::by_who> >
    > keys_indexed;
   
 };
