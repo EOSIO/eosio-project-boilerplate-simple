@@ -1,0 +1,21 @@
+.home {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.homeHeader {
+  font-size: 9em !important;
+  margin-bottom: 0.3em !important;
+}
+
+.subHeader {
+  margin-bottom: 2em;
+  font-size: 2em;
+}
+
+.entry-links a {
+  margin: 1em;
+}
