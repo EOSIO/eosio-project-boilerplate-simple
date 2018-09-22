@@ -71,7 +71,7 @@ class notechain : public eosio::contract {
         auto &email = emails.get(_user);
         // update object
         obj.modify( email, _self, [&]( auto& address ) {
-          address.email        = _email;
+          address.email       = _email;
           address.timestamp   = now();
         });
       }
