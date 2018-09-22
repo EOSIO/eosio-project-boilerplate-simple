@@ -8,12 +8,12 @@ import Footer from '../components/Footer/Footer'
 const Router = () => (
   <BrowserRouter>
     <div className="container-fluid">
-    <Header />
-    <Switch>
-    <Route path="/" component={App} />
-    <Route component={NotFound} />
-    </Switch>
-    <Footer />
+        <Header />
+        <Switch>
+            <Route path="/" component={App} />
+            <Route component={NotFound} />
+        </Switch>
+        <Footer />
     </div>
   </BrowserRouter>
 );
