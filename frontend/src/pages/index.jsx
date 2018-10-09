@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Api, Rpc, SignatureProvider } from 'eosjs'; // https://github.com/EOSIO/eosjs
+import { TextDecoder, TextEncoder } from 'text-encoding';
 
 // material-ui dependencies
 import { withStyles } from '@material-ui/core/styles';
@@ -26,7 +27,6 @@ const accounts = [
   {"name":"useraaaaaaaf", "privateKey":"5KaqYiQzKsXXXxVvrG8Q3ECZdQAj2hNcvCgGEubRvvq7CU3LySK", "publicKey":"EOS5btzHW33f9zbhkwjJTYsoyRzXUNstx1Da9X2nTzk8BQztxoP3H"},
   {"name":"useraaaaaaag", "privateKey":"5KFyaxQW8L6uXFB6wSgC44EsAbzC7ideyhhQ68tiYfdKQp69xKo", "publicKey":"EOS8Du668rSVDE3KkmhwKkmAyxdBd73B51FKE7SjkKe5YERBULMrw"}
 ];
-
 // set up styling classes using material-ui "withStyles"
 const styles = theme => ({
   card: {
@@ -90,7 +90,7 @@ class Index extends Component {
     // eosjs function call: connect to the blockchain
     const rpc = new Rpc.JsonRpc(endpoint);
     const signatureProvider = new SignatureProvider([privateKey]);
-    const api = new Api({ rpc, signatureProvider });
+    const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
     try {
       const result = await api.transact({
         actions: [{
