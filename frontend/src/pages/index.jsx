@@ -111,9 +111,6 @@ class Index extends Component {
       this.getTable();
     } catch (e) {
       console.log('Caught exception: ' + e);
-      if (e instanceof Rpc.RpcError) {
-        console.log(JSON.stringify(e.json, null, 2));
-      }
     }
   }
 
