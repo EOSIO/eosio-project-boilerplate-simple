@@ -206,11 +206,13 @@ exit
 
 ## Smart contract (Blockchain):
 
-The smart contract can be found at `eosio_docker/contracts/notechain/notechain.cpp`, you can edit this smart contract. You will then need to compile and deploy the contract to the blockchain.
+The smart contract can be found at `eosio_docker/contracts/notechain/notechain.cpp`(host environment), you can edit this smart contract. You will then need to compile and deploy the contract to the blockchain.
 
 To save time, we prepared some scripts for you. Execute the scripts in the container bash (see above.)
 
 The following script will help you to unlock the wallet, compile the modified contract and deploy to blockchain. 1st parameter is the contract name; 2nd parameter is the account name of the contract owner, 3rd and 4th parameter references  wallet related information that was created during the `Initial setup`:
+
+Inside docker container
 ```sh
 ./scripts/deploy_contract.sh notechain notechainacc notechainwal $(cat notechain_wallet_password.txt)
 ```
@@ -221,7 +223,7 @@ Remember to redeploy the NoteChain contract each time you modify it using the st
 
 ## Frontend:
 
-The UI code can be found at `noteChain/frontend/src/pages/index.jsx`, once you have edited this code the frontend react app compile automatically and the page on browser will be automatically refreshed. You can see the change on the browser once the browser finishes loading.
+The UI code can be found at `eosio_docker/frontend/src/pages/index.jsx`(host environment), once you have edited this code the frontend react app compile automatically and the page on browser will be automatically refreshed. You can see the change on the browser once the browser finishes loading.
 
 ## Docker commands
 
