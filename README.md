@@ -223,7 +223,7 @@ Remember to redeploy the NoteChain contract each time you modify it using the st
 
 ## Frontend:
 
-The UI code can be found at `eosio_docker/frontend/src/pages/index.jsx`(host environment), once you have edited this code the frontend react app compile automatically and the page on browser will be automatically refreshed. You can see the change on the browser once the browser finishes loading.
+The UI code can be found at `frontend/src/pages/index.jsx`(host environment), once you have edited this code the frontend react app compile automatically and the page on browser will be automatically refreshed. You can see the change on the browser once the browser finishes loading.
 
 ## Docker commands
 
