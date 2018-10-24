@@ -79,8 +79,8 @@ class Index extends Component {
       case "submit":
         actionName = "update";
         actionData = {
-          _user: account,
-          _note: note,
+          username: account,
+          note: note,
         };
         break;
       default:
