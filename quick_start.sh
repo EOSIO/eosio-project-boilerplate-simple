@@ -7,4 +7,11 @@
 ./start_eosio_docker.sh --nolog
 
 # start frontend react app
-./start_frontend.sh
+./start_frontend.sh &
+P1=$!
+
+./start_backend.sh &
+P2=$!
+
+# wait $P1 $P2
+wait $P1 $P2
