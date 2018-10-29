@@ -1,42 +1,73 @@
-const { BaseActionWatcher } = require("demux")
+const { BaseActionWatcher, AbstractActionHandler } = require("demux");
 const { NodeosActionReader } = require("demux-eos") // eslint-disable-line
-const ActionHandler = require("./ActionHandler")
+const express = require("express");
+const app = express();
 
-const actionWatcher = new BaseActionWatcher(
+let state = { currentBlockNumber: 0, currentBlockHash: "", notechainTable : [] }; // Initial state
+
+class ActionHandler extends AbstractActionHandler {
+
+  async handleWithState(handle) {
+    await handle(state);
+  }
+
+  async loadIndexState() {
+    return state;
+  }
+
+  async updateIndexState(state, block) {
+    state.currentBlockNumber = block.blockInfo.blockNumber;
+    state.currentBlockHash = block.blockInfo.blockHash;
+  }
+
+}
+
+new BaseActionWatcher(
   new NodeosActionReader(
-    "http://mainnet.eoscalgary.io", // Thanks EOS Calgary!
-    0, // Start at most recent blocks
+    "http://localhost:8888", // Thanks EOS Calgary!
+    1, // Start at block 1
   ),
   new ActionHandler(
     [
       {
-        actionType: "eosio.token::transfer",
+        actionType: "notechainacc::update",
         updater(state, payload, blockInfo, context) {
-          const parseTokenString = (tokenString) => {
-            const [amountString, symbol] = tokenString.split(" ")
-            const amount = parseFloat(amountString)
-            return { amount, symbol }
+          const { _user, _note } = payload.data;
+          const { timestamp } = blockInfo;
+
+          let { notechainTable } = state;
+
+          let row = notechainTable.find( row => row.user == _user );
+          if ( !row ){
+            row = {};
+            notechainTable = [ ...notechainTable, row];
           }
-          const { amount, symbol } = parseTokenString(payload.data.quantity)
-          if (!state.volumeBySymbol[symbol]) {
-            state.volumeBySymbol[symbol] = amount
-          } else {
-            state.volumeBySymbol[symbol] += amount
-          }
-          state.totalTransfers += 1
+
+          row.user = _user;
+          row.note = _note;
+          row.timestamp = timestamp;
+
+          state.notechainTable = notechainTable;
+
         },
       },
     ],
     [
       {
-        actionType: "eosio.token::transfer",
+        actionType: "notechainacc::update",
         effect(state, payload, blockInfo, context) {
-          console.info("State updated:\n", JSON.stringify(state, null, 2))
+          console.info("State updated:\n", JSON.stringify(state, null, 2));
         },
       },
     ],
   ),
   500,
-)
+).watch();
 
-actionWatcher.watch()
+app.get("/", function(req, res) {
+  res.status(200).send(state);
+});
+
+const server = app.listen(3001, function () {
+  console.log("app running on port.", server.address().port);
+});
