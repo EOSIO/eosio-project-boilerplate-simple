@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Api, Rpc, SignatureProvider } from 'eosjs'; // https://github.com/EOSIO/eosjs
+import { Api, JsonRpc, RpcError, JsSignatureProvider } from 'eosjs'; // https://github.com/EOSIO/eosjs
 import { TextDecoder, TextEncoder } from 'text-encoding';
 
 // material-ui dependencies
@@ -88,8 +88,8 @@ class Index extends Component {
     }
 
     // eosjs function call: connect to the blockchain
-    const rpc = new Rpc.JsonRpc(endpoint);
-    const signatureProvider = new SignatureProvider([privateKey]);
+    const rpc = new JsonRpc(endpoint);
+    const signatureProvider = new JsSignatureProvider([privateKey]);
     const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
     try {
       const result = await api.transact({
@@ -111,13 +111,16 @@ class Index extends Component {
       this.getTable();
     } catch (e) {
       console.log('Caught exception: ' + e);
+      if (e instanceof RpcError) {
+        console.log(JSON.stringify(e.json, null, 2));
+      }
     }
   }
 
   // gets table data from the blockchain
   // and saves it into the component state: "noteTable"
   getTable() {
-    const rpc = new Rpc.JsonRpc(endpoint);
+    const rpc = new JsonRpc(endpoint);
     rpc.get_table_rows({
       "json": true,
       "code": "notechainacc",   // contract who owns the table
