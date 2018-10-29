@@ -13,8 +13,9 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-// eosio endpoint
-const endpoint = "http://localhost:8888";
+// eosio endpoints
+const endpoint_blockchain = "http://localhost:8888";
+const endpoint_backend = "http://localhost:3001";
 
 // NEVER store private keys in any source code in your real life development
 // This is for demo purposes only!
@@ -88,7 +89,7 @@ class Index extends Component {
     }
 
     // eosjs function call: connect to the blockchain
-    const rpc = new Rpc.JsonRpc(endpoint);
+    const rpc = new Rpc.JsonRpc(endpoint_blockchain);
     const signatureProvider = new SignatureProvider([privateKey]);
     const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
     try {
@@ -108,7 +109,10 @@ class Index extends Component {
       });
 
       console.log(result);
-      this.getTable();
+      // ** IMPORTANT NOTE **
+      // get the latest state from backend ( demux ) after the transaction is finished by 1 second to ensure the state has been updated in demux.
+      // in a more complicated dapp, you may need to hook the frontend data update triggered by demux side effects ( such as using websocket )
+      await new Promise(resolve => setTimeout( () => resolve(this.getTable()), 1000));
     } catch (e) {
       console.log('Caught exception: ' + e);
     }
@@ -116,15 +120,9 @@ class Index extends Component {
 
   // gets table data from the blockchain
   // and saves it into the component state: "noteTable"
-  getTable() {
-    const rpc = new Rpc.JsonRpc(endpoint);
-    rpc.get_table_rows({
-      "json": true,
-      "code": "notechainacc",   // contract who owns the table
-      "scope": "notechainacc",  // scope of the table
-      "table": "notestruct",    // name of the table as specified by the contract abi
-      "limit": 100,
-    }).then(result => this.setState({ noteTable: result.rows }));
+  async getTable() {
+    const url = endpoint_backend + "/store";
+    await fetch(url).then(response => response.json()).then(result => this.setState({ noteTable: result.noteTable }));
   }
 
   componentDidMount() {
@@ -143,7 +141,7 @@ class Index extends Component {
             {user}
           </Typography>
           <Typography style={{fontSize:12}} color="textSecondary" gutterBottom>
-            {new Date(timestamp*1000).toString()}
+            {timestamp}
           </Typography>
           <Typography component="pre">
             {note}
