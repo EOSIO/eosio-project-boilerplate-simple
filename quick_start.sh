@@ -10,6 +10,7 @@
 ./start_frontend.sh &
 P1=$!
 
+# start backend demux and express process
 ./start_backend.sh &
 P2=$!
 
