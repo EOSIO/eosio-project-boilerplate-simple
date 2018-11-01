@@ -72,7 +72,7 @@ After the initialisation, three terminal windows are required, both opened in th
 
 - The **first terminal window** is for **blockchain** process.
 - The **second terminal window** is for **frontend** react app.
-- The **thrid terminal window** is for **backend** demux and express process.
+- The **third terminal window** is for **backend** demux and express process.
 
 **running the blockchain**
 
@@ -95,15 +95,15 @@ For the second (frontend) terminal window, running
 ```sh
 ./start_frontend.sh
 ```
-will open a browser session connecting to http://localhost:3000/ showing the react app. You can try to add or remove notes using one of the pre-created accounts with its key on the website. This react app will interact with the smart contract, performing transactions, which are written to the blockchain, which stores note data in the multi index table of the smart contract running on your local nodeos.
+will open a browser session connecting to `http://localhost:3000/` showing the react app. You can try to add or remove notes using one of the pre-created accounts with its key on the website. This react app will interact with the smart contract, performing transactions, which are written to the blockchain, which stores note data in the multi index table of the smart contract running on your local nodeos.
 
 **running the backend**
 
-For the thrid (backend) terminal window, running
+For the third (backend) terminal window, running
 ```sh
 ./start_backend.sh
 ```
-will open a browser session connecting to an express RESTFUL api http://localhost:3001/store showing state in a local memory datastore managed by demux. Demux will check all valid blocks from the local node and manage the state by an action handler.
+will open a browser session connecting to an express RESTful api `http://localhost:3001/store` showing state in a local memory datastore managed by demux. Demux will check all valid blocks from the local node and manage the state by an action handler.
 
 ## Stopping blockchain or DApp
 
@@ -122,7 +122,7 @@ In the second (frontend) terminal window, press `ctrl+c` on your keyboard. The f
 
 **stopping the backend**
 
-In the thrid (backend) terminal window, press `ctrl+c` on your keyboard. The backend demux and express process will be stopped.
+In the third (backend) terminal window, press `ctrl+c` on your keyboard. The backend demux and express process will be stopped.
 
 ## Restarting blockchain or DApp
 
@@ -144,7 +144,7 @@ In the second (frontend) terminal window, you can restart the frontend react app
 
 **restarting the backend**
 
-In the thrid (backend) terminal window, you can restart the backend demux and express process by executing:
+In the third (backend) terminal window, you can restart the backend demux and express process by executing:
 ```sh
 ./start_backend.sh
 ```
@@ -188,7 +188,7 @@ noteChain // project directory
 │   └── package.json // for npm packages
 └── backend
     ├── node_modules // generated after npm install
-    ├── index.js // the state object stored in a global variable in the node process, the demux and the express RESTFUL api.
+    ├── index.js // the state object stored in a global variable in the node process, the demux and the express RESTful api.
     ├── package-lock.json // generated after npm install
     └── package.json // for npm packages
 
@@ -213,7 +213,7 @@ The DApp consists of three parts. eosio blockchain, frontend react app and backe
 
 Users interact with the UI in client and sign the transaction in frontend. The signed transaction (which is an `update` action in this demo DApp) is sent to the blockchain directly. After the transaction is accepted in blockchain, demux checked the valid block, reading the payloads of the transaction ( pushed action ) and managed the state and build a data table in a local datastore ( a global variable ) in the node process.
 
-The UI, index.jsx, reads the notes from backend express RESTFUL api. The api read the data table from the state variable in the node process.
+The UI, index.jsx, reads the notes from backend express RESTful api. The api read the data table from the state variable in the node process.
 
 ## Docker usage
 
@@ -258,7 +258,7 @@ The UI code can be found at `frontend/src/pages/index.jsx`(host environment), on
 The code can be found at `backend/index.js`. The code in backend mainly could divided into three parts:
 1. The state global object. It stores the latest fetched blockinfo and data table.
 2. Demux. The action watcher watches and checks all valid blocks of the local node ( blockchain ) of the "update" action of the contract account. Hence the action handler manange the state and reduced it into a data table.
-3. Express. A RESTFUL api service returning the state object to frontend.
+3. Express. A RESTful api service returning the state object to frontend.
 
 Once you have edited this code. Stop the process and start it again manually to apply the changes.
 
