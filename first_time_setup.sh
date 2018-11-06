@@ -19,9 +19,9 @@ if [ ! -x "$(command -v docker)" ] ||
     exit
 fi
 
-# download eosio/eos-dev:v1.3.2 image
-echo "=== pull eosio/eos-dev image v1.3.2 from docker hub ==="
-docker pull eosio/eos-dev:v1.3.2
+# download eosio/eos-dev:v1.4.1 image
+echo "=== pull eosio/eos-dev image v1.4.1 from docker hub ==="
+docker pull eosio/eos-dev:v1.4.1
 
 # force remove the perivous container if any
 # create a clean data folder in eosio_docker to preserve block data
