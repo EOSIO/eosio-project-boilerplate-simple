@@ -1,0 +1,27 @@
+{
+  "name": "mobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.4.0",
+    "eosjs": "^20.0.0-beta2",
+    "react": "16.4.1",
+    "react-dom": "^16.6.1",
+    "react-native": "0.56.1",
+    "react-scripts": "^2.1.1",
+    "text-encoding": "^0.7.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "babel-preset-react-native": "^5",
+    "jest": "23.6.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
