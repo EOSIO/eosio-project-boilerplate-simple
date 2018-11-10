@@ -26,14 +26,12 @@ CONTRACT amplify : public contract {
     proposaltable _proposal;
 
     TABLE user {
-      uint64_t      prim_key;  // primary key
+      name user;
+      uint64_t last_stake; // date user last staked tokens
       bool active; //whether user is active or not
-      uint128_t proposal_id; //id of proposal
       uint128_t stake; // amount of tokens staked
       
-      auto primary_key() const { return prim_key; }
-
-      //index will be multiindex of user/proposalid
+      auto primary_key() const { return user.value; }
     };
 
     typedef eosio::multi_index<"users"_n, user> usertable;
@@ -42,7 +40,13 @@ CONTRACT amplify : public contract {
 
     ACTION stake(name user) { 
       require_auth(user);
-      eosio::print("CALLED");
+      //TODO: use tokens
+      _users.emplace(_self, [&](auto& new_user) {
+        new_user.active = true;
+        new_user.user = user;
+        new_user.stake = 5;
+        new_user.last_stake = now;
+      });
     }
 };
 
