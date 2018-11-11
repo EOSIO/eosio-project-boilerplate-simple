@@ -39,7 +39,7 @@ CONTRACT amplify : public contract {
     usertable _users;
 
     ACTION handledep() {
-
+      
     }
 
     ACTION stake(name user) { 
