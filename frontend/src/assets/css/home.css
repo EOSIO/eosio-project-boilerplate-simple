@@ -1,55 +1,11 @@
 .containter {
-    padding-top: 5em;
-    background-color: #99cc99;
-    text-align: center;
+    padding-top: 8em;
     height: 100vh;
-}
-.splash-img {
-    border: 0.2em solid #c5e7c5;
-}
-.splash-img:hover {
-    cursor: pointer;
+    /* background-color: #33cccc; */
+    background: #2e2e2e; /* Old browsers */
+    text-align: center;
 }
 
-.box{
-    height: 720px;
-    width: 480px;
-    text-align: center;
-    margin-left: 28%
-}
-.circle-1 {
-    width: 0;
-    height: 0;
-    border: 0.5em solid #c5e7c5;
-    border-radius: 0.5em;
-    position: relative;
-    top: 8%;
-    left: -1.5%;
-}
-.circle-2 {
-    width: 0;
-    height: 0;
-    border: 0.5em solid #c5e7c5;
-    border-radius: 0.5em;
-    position: relative;
-    top: 72.5%;
-    left: -1.5%;
-}
-.circle-3 {
-    width: 0;
-    height: 0;
-    border: 0.5em solid #c5e7c5;
-    border-radius: 0.5em;
-    position: relative;
-    top: 3%;
-    left: 149.5%;
-}
-.circle-4 {
-    width: 0;
-    height: 0;
-    border: 0.5em solid #c5e7c5;
-    border-radius: 0.5em;
-    position: relative;
-    top: 68.5%;    
-    left: 149.5%;
+.splash-img:hover {
+    cursor: pointer;
 }

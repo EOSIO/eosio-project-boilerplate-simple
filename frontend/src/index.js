@@ -22,7 +22,8 @@ ReactDOM.render(
       <Switch>
 
         <Route exact path='/' component={ Home } />
-        
+        <Route exact path='/index' component={ Index } />
+      
       </Switch>
 
     </Router>
