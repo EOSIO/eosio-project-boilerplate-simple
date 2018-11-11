@@ -1,0 +1,25 @@
+notes.txt
+
+sudo keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -export -rfc -alias <upload> -file <upload_certificate.pem> -keystore <keystore.jks>
+
+
+yarn add bugsnag-react-native --save
+npm install bugsnag-react-native --save
+
+
+1. Clear watchman watches: `watchman watch-del-all`.
+2. Delete the `node_modules` folder: `rm -rf node_modules && npm install`.
+3. Reset Metro Bundler cache: `rm -rf /tmp/metro-bundler-cache-*` or `npm start -- --reset-cache`.
+4. Remove haste cache: `rm -rf /tmp/haste-map-react-native-packager-*`.
+
+npm start -- --reset-cache
+
+react-native init mobile --version react-native@0.56.1
+
+libRCTDeviceUUID
+
+
+cd node_modules/react-native/third-party/glog-0.3.4/ && ../../scripts/ios-configure-glog.sh
+cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh
