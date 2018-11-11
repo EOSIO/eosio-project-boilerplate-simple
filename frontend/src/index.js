@@ -9,8 +9,8 @@ import reducers from './reducers';
 import { Switch, Route, Router } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import Index from './pages/index';
 import Home from './pages/Home';
+import Main from './pages/Main';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const history = createBrowserHistory();
@@ -22,7 +22,7 @@ ReactDOM.render(
       <Switch>
 
         <Route exact path='/' component={ Home } />
-        <Route exact path='/index' component={ Index } />
+        <Route exact path='/main' component={ Main } />
       
       </Switch>
 

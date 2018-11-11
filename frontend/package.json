@@ -13,7 +13,9 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
-    "text-encoding": "^0.7.0"
+    "text-encoding": "^0.7.0",
+    "font-awesome": "^4.7.0",
+    "react-transitions": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,11 +1,11 @@
 .containter {
-    padding-top: 8em;
     height: 100vh;
-    /* background-color: #33cccc; */
-    background: #2e2e2e; /* Old browsers */
+    background: #2e2e2e;
     text-align: center;
+    /* background-color: #33cccc; */
 }
 
-.splash-img:hover {
+.splash-img {
+    padding-top: 8em;
     cursor: pointer;
 }

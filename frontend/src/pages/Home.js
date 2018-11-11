@@ -8,7 +8,7 @@ class Home extends Component {
     render() {
         return(
             <div className="containter">
-                <Link to="/contract">
+                <Link to="/main">
                 <div className="box">
                     <img src={splashImg} className="splash-img" alt="splash-img" />
                 </div>

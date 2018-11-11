@@ -1,0 +1,54 @@
+.header {
+    padding-top: 2em;
+}
+.header .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0.5em;
+}
+.header .grid-item {
+    color: white;
+}
+.title {
+    background: #373838;
+    border: 0.05em solid #33cccc;
+    /* color: #f17762; */
+    color: white;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: 1.25em;
+    font-family: 'Orbitron', sans-serif;
+    margin: auto;
+}
+.icon {
+    color: #fcba6e;
+    padding-left: .25em;
+    padding-right: .25em;
+}
+.flip {
+    -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+    -o-transform:rotateY(180deg);
+    -ms-transform:rotateY(180deg);
+    unicode-bidi:bidi-override;
+    direction:rtl;
+}
+
+.body {
+    padding-top: 0.5em;
+}
+.body .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0.5em;
+}
+.body .grid-item {
+    color: white;
+}
+
+.wallet {
+    border: 0.05em solid #fcba6e;
+    height: 4em;
+    width: 80%;
+    margin-left: 2em;
+}
