@@ -21,4 +21,8 @@ done
 
 #start frontend react app
 echo "[quick_start.sh] Starting frontend react app"
-./start_frontend.sh
+./start_frontend.sh &
+P1=$!
+
+# wait $P1
+wait $P1

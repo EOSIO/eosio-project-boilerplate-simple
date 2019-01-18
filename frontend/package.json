@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.5.1",
-    "eosjs": "20.0.0-beta2",
+    "eosjs": "20.0.0-beta3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^2.1.3",
     "text-encoding": "^0.7.0"
   },
   "scripts": {
@@ -15,5 +15,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Api, JsonRpc, RpcError, JsSignatureProvider } from 'eosjs'; // https://github.com/EOSIO/eosjs
+import { Api, JsonRpc, RpcError } from 'eosjs'; // https://github.com/EOSIO/eosjs
+import JsSignatureProvider from 'eosjs/dist/eosjs-jssig'
 import { TextDecoder, TextEncoder } from 'text-encoding';
 
 // material-ui dependencies
