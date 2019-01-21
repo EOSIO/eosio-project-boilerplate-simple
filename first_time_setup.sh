@@ -35,7 +35,7 @@ rm -rf "./eosio_docker/data"
 mkdir -p "./eosio_docker/data"
 
 # set up node_modules for frontend
-echo "=== npm install packpage for frontend react app ==="
+echo "=== npm install package for frontend react app ==="
 # change directory to ./frontend
 cd "$SCRIPTPATH/frontend"
 npm install
