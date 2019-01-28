@@ -1,3 +1,5 @@
+⚠️ ***Important! Since Jan 1st 2019, eosio/eos-dev docker image in docker hub is deprecated. Starting from that time, eosio-project-boilerplate-simple is building its own docker image based on eos and eosio.cdt instead of pulling eosio/eos-dev.*** ⚠️
+
 # Overview
 NoteChain demonstrates the eosio platform running a blockchain as a local single node test net with a simple DApp, NoteChain. NoteChain allows users to create and update notes. This guide uses scripts, containing relevant commands, which will show you how to install, build and run NoteChain, and by doing so will demonstrate:
 
@@ -64,7 +66,7 @@ In this section we will describe in detail each script used to run the NoteChain
 ./first_time_setup.sh
 ```
 
-Executing the above shell script verifies that docker and node.js are installed. It then downloads the `eosio/eos-dev` docker image (which contains a full version of the eosio blockchain), removes any previous instances of this docker container and installs node packages for the frontend react app.
+Executing the above shell script verifies that docker and node.js are installed. It then builds `eosio-notechain` docker image if it has never been built before (which contains a full version of the eosio blockchain), removes any previous instances of this docker container and installs node packages for the frontend react app.
 
 ## Initialise and start blockchain and DApp
 
@@ -189,7 +191,7 @@ The UI, index.jsx, reads the notes data directly from nodeos using 'getTableRows
 
 ## Docker usage
 
-Docker is used to wrap the eosio software inside and run a container (instance) from an image (eosio/eos-dev v1.4.2). To work with the blockchain directly, by running the scripts or using a cleos command line, you need to go into the container bash.
+Docker is used to wrap the eosio software inside and run a container (instance) from an image (`eosio-notechain`). To work with the blockchain directly, by running the scripts or using a cleos command line, you need to go into the container bash.
 
 Go into container bash:
 ```sh
@@ -231,7 +233,7 @@ If you are more familiar with docker, you could use the docker commands below to
 
 **Execute below command in `/eosio_docker`:**
 
-Run container from eosio/eos-dev image by mounting contracts / scripts to the container with running the init_blockchain.sh script as the process.
+Run container from `eosio-notechain` image by mounting contracts / scripts to the container with running the init_blockchain.sh script as the process.
 The init_blockchain.sh script run the local node of the blockchain and initializes wallets / contract / data.
 ```sh
 docker run --rm --name eosio_notechain_container \
@@ -239,7 +241,7 @@ docker run --rm --name eosio_notechain_container \
 --mount type=bind,src="$(pwd)"/contracts,dst=/opt/eosio/bin/contracts \
 --mount type=bind,src="$(pwd)"/scripts,dst=/opt/eosio/bin/scripts \
 --mount type=bind,src="$(pwd)"/data,dst=/mnt/dev/data \
--w "/opt/eosio/bin/" eosio/eos-dev:v1.4.2 /bin/bash -c "./scripts/init_blockchain.sh"
+-w "/opt/eosio/bin/" eosio-notechain:eos1.6.0-cdt1.5.0 /bin/bash -c "./scripts/init_blockchain.sh"
 ```
 
 Output and follow docker console logs:
