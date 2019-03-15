@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source constant.sh
+
 echo "=== start of first time setup ==="
 
 # change to script's directory
@@ -20,9 +22,9 @@ if [ ! -x "$(command -v docker)" ] ||
 fi
 
 # build docker image, if necessary
-if [[ "$(docker images -q eosio-notechain:eos1.6.0-cdt1.5.0)" == "" ]]; then
-  echo "=== Build docker image eosio-notechain version eos1.6.0-cdt1.5.0, this will take some time for the first time run ==="
-  docker build -t eosio-notechain:eos1.6.0-cdt1.5.0 .
+if [[ "$(docker images -q $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG)" == "" ]]; then
+  echo "=== Build docker image $DOCKER_IMAGE_NAME version $DOCKER_IMAGE_TAG, this will take some time for the first time run ==="
+  docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG .
 else
   echo "=== Docker image already exists, skip building ==="
 fi
