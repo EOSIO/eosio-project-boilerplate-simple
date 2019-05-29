@@ -121,7 +121,6 @@ class Index extends Component {
   // gets table data from the blockchain
   // and saves it into the component state: "noteTable"
   getTable() {
-    try{
       const rpc = new JsonRpc(endpoint);
       rpc.get_table_rows({
         "json": true,
@@ -130,8 +129,6 @@ class Index extends Component {
         "table": "notestruct",    // name of the table as specified by the contract abi
         "limit": 100,
       }).then(result => this.setState({ noteTable: result.rows }));
-    }
-    catch(e){}
   }
 
   componentDidMount() {
