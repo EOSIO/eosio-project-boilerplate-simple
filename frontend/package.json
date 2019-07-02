@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.5.1",
-    "eosjs": "20.0.0-beta3",
+    "eosjs": "20.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "^2.1.3",

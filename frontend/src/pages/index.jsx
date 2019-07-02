@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Api, JsonRpc, RpcError } from 'eosjs'; // https://github.com/EOSIO/eosjs
-import JsSignatureProvider from 'eosjs/dist/eosjs-jssig'
+import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
 import { TextDecoder, TextEncoder } from 'text-encoding';
 
 // material-ui dependencies
@@ -147,7 +147,7 @@ class Index extends Component {
             {user}
           </Typography>
           <Typography style={{fontSize:12}} color="textSecondary" gutterBottom>
-            {new Date(timestamp*1000).toString()}
+            {new Date(timestamp+"+00:00").toString()}
           </Typography>
           <Typography component="pre">
             {note}
