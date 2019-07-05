@@ -1,4 +1,5 @@
-#include <eosiolib/eosio.hpp>
+#include <eosio/eosio.hpp>
+#include <eosio/system.hpp>
 
 using namespace eosio;
 
@@ -26,10 +27,10 @@ CONTRACT notechain : public eosio::contract {
     }
 
     TABLE notestruct {
-      uint64_t      prim_key;  // primary key
-      name          user;      // account name for the user
-      std::string   note;      // the note message
-      uint64_t      timestamp; // the store the last update block time
+      uint64_t         prim_key;  // primary key
+      name             user;      // account name for the user
+      std::string      note;      // the note message
+      block_timestamp  timestamp; // the store the last update block time
 
       // primary key
       auto primary_key() const { return prim_key; }
@@ -64,7 +65,7 @@ CONTRACT notechain : public eosio::contract {
           new_user.prim_key    = _notes.available_primary_key();
           new_user.user        = user;
           new_user.note        = note;
-          new_user.timestamp   = now();
+          new_user.timestamp   = eosio::current_block_time();
         });
       } else {
         // get object by secordary key
@@ -73,7 +74,7 @@ CONTRACT notechain : public eosio::contract {
         // update existing note
         _notes.modify( note_entry, _self, [&]( auto& modified_user ) {
           modified_user.note      = note;
-          modified_user.timestamp = now();
+          modified_user.timestamp = eosio::current_block_time();
         });
       }
     }
