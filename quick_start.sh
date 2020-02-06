@@ -19,6 +19,9 @@ do
   sleep 2s
 done
 
+# An extra sleep is added here to make sure the note contract is deployed before the front end is launched
+sleep 5s
+
 #start frontend react app
 echo "[quick_start.sh] Starting frontend react app"
 ./start_frontend.sh &
