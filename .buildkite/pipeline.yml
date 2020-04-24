@@ -1,0 +1,17 @@
+env:
+ BUILDKITE_CLEAN_CHECKOUT: true
+steps:
+  - label: ':bash: unit test'
+    command: 'bash .buildkite/unit_test.sh'
+    agents: 
+      queue: hk-infra-ci-agent
+  - wait
+  - label: ':bash: integration test'
+    command: 'bash .buildkite/integration_test.sh'
+    agents: 
+      queue: hk-infra-ci-agent
+  - wait
+  - label: ':bash: end to end test'
+    command: 'bash .buildkite/end_to_end_test.sh'
+    agents: 
+      queue: hk-infra-ci-agent
