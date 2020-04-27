@@ -241,7 +241,7 @@ docker run --rm --name eosio_notechain_container \
 --mount type=bind,src="$(pwd)"/contracts,dst=/opt/eosio/bin/contracts \
 --mount type=bind,src="$(pwd)"/scripts,dst=/opt/eosio/bin/scripts \
 --mount type=bind,src="$(pwd)"/data,dst=/mnt/dev/data \
--w "/opt/eosio/bin/" eosio-notechain:eos2.0.0-cdt1.6.2 /bin/bash -c "./scripts/init_blockchain.sh"
+-w "/opt/eosio/bin/" eosio-notechain:eos2.0.5-cdt1.6.2 /bin/bash -c "./scripts/init_blockchain.sh"
 ```
 
 Output and follow docker console logs:
