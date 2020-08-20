@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "1.5.1",
-    "eosjs": "20.0.0",
-    "react": "16.4.2",
-    "react-dom": "16.4.2",
-    "react-scripts": "3.4.0",
-    "text-encoding": "0.7.0"
+    "@material-ui/core": "^4.11.0",
+    "eosjs": "^21.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.3",
+    "text-encoding": "^0.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
