@@ -24,8 +24,4 @@ sleep 5s
 
 #start frontend react app
 echo "[quick_start.sh] Starting frontend react app"
-./start_frontend.sh &
-P1=$!
-
-# wait $P1
-wait $P1
+./start_frontend.sh
