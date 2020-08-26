@@ -35,11 +35,11 @@ const styles = theme => ({
   },
   paper: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   formButton: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     width: "100%",
   },
   pre: {
@@ -143,7 +143,7 @@ class Index extends Component {
     const generateCard = (key, timestamp, user, note) => (
       <Card className={classes.card} key={key}>
         <CardContent>
-          <Typography variant="headline" component="h2">
+          <Typography variant="h6" component="h2">
             {user}
           </Typography>
           <Typography style={{fontSize:12}} color="textSecondary" gutterBottom>
@@ -162,7 +162,7 @@ class Index extends Component {
       <div>
         <AppBar position="static" color="default">
           <Toolbar>
-            <Typography variant="title" color="inherit">
+            <Typography variant="h6" color="inherit">
               Note Chain
             </Typography>
           </Toolbar>
